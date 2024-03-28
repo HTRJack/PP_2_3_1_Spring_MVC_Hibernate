@@ -24,10 +24,10 @@
     </tr>
     <c:forEach var="user" items="${userList}">
         <tr>
-            <td align="center">${user.id}</td>
+            <td>${user.id}</td>
             <td>${user.name}</td>
             <td>${user.lastName}</td>
-            <td align="center">${user.age}</td>
+            <td>${user.age}</td>
             <td>
                 <a href="/editUser?id=${user.id}">edit</a>
 
@@ -36,7 +36,6 @@
         </tr>
     </c:forEach>
 </table>
-
 <h2>Add user</h2>
 <c:url value="/add" var="var"/>
 <form action="${var}" method="POST">

@@ -10,9 +10,12 @@ import java.util.List;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-    @PersistenceContext
     private EntityManager entityManager;
 
+    @PersistenceContext
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -34,7 +37,6 @@ public class UserDAOImpl implements UserDAO {
         if (entityManager.contains(user)) {
             entityManager.remove(user);
         } else {
-
             entityManager.remove(entityManager.merge(user));
         }
     }

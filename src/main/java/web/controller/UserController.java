@@ -15,52 +15,40 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    public void setUserService(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
+
 
     @GetMapping(value = "/")
     public ModelAndView allUsers() {
         List<User> users = userService.getAllUsers();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("users");
-        modelAndView.addObject("userList", users);
-        return modelAndView;
+        return new ModelAndView("users", "userList", users);
     }
 
     @GetMapping(value = "/editUser")
     public ModelAndView editPage(@RequestParam(value = "id") int id) {
         User user = userService.getById(id);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("editUser");
-        modelAndView.addObject("user", user);
-        return modelAndView;
+        return new ModelAndView("editUser", "user", user);
     }
 
     @PostMapping(value = "/edit")
     public ModelAndView editUser(@ModelAttribute("user") User user) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
         userService.edit(user);
-        return modelAndView;
+        return new ModelAndView("redirect:/");
     }
 
     @GetMapping(value = "/delete")
     public ModelAndView deleteUser(@RequestParam(value = "id") int id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
         User user = userService.getById(id);
         userService.delete(user);
-        return modelAndView;
+        return new ModelAndView("redirect:/");
     }
 
 
     @PostMapping(value = "/add")
     public ModelAndView addUser(@ModelAttribute("user") User user) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
         userService.addUser(user);
-        return modelAndView;
+        return new ModelAndView("redirect:/");
     }
-
 }
